@@ -1,7 +1,5 @@
 import './styles.css';
 
-import './styles.css';
-
 const player = document.querySelector('.name');
 const score = document.querySelector('.score');
 const submitbtn = document.querySelector('.submit');
@@ -19,7 +17,7 @@ const hide = () => {
 const gamename = async (gameid) => {
   let response = await fetch(api, {
     method: 'POST',
-    body: JSON.stringify({ name: "Shingirai's Game" }),
+    body: JSON.stringify({ name: "Shingiraia's Game" }),
     headers: {
       'Content-type': 'application/json; charset=UTF-8',
     },
