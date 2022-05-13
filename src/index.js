@@ -1,4 +1,5 @@
 import './styles.css';
+import img from './leaderboard.jpg';
 
 const player = document.querySelector('.name');
 const score = document.querySelector('.score');
@@ -7,8 +8,10 @@ const refreshbtn = document.querySelector('.refresh');
 const scoresdiv = document.querySelector('.scores-div');
 const msg = document.querySelector('#message');
 const gameid = localStorage.getItem('scores');
+const background = document.querySelector('html');
 const api = 'https://us-central1-js-capstone-backend.cloudfunctions.net/api/games/';
 
+background.style.backgroundImage = `url('${img}')`;
 const hide = () => {
   msg.classList.remove('active');
   msg.classList.remove('empty');
@@ -17,7 +20,7 @@ const hide = () => {
 const gamename = async (gameid) => {
   let response = await fetch(api, {
     method: 'POST',
-    body: JSON.stringify({ name: "Shingiraia's Game" }),
+    body: JSON.stringify({ name: "Shingirai's Game" }),
     headers: {
       'Content-type': 'application/json; charset=UTF-8',
     },
@@ -29,11 +32,11 @@ const gamename = async (gameid) => {
 };
 
 const submitfun = async (player, score, gameid) => {
-  if (player.value !== '' && score.value !== '') {
+  if (player.value !== '' && score.value !== '' && isNaN(score.value)===false) {
     await fetch(`https://us-central1-js-capstone-backend.cloudfunctions.net/api/games/${gameid}/scores`, {
       method: 'POST',
       body: JSON.stringify({
-        user: `${player.value}`,
+        user: `${player.value}:`,
         score: `${score.value}`,
       }),
       headers: {
@@ -46,7 +49,7 @@ const submitfun = async (player, score, gameid) => {
     score.value = '';
     setTimeout(hide, 2000);
   } else {
-    msg.textContent = "Inputs shouldn't be empty";
+    msg.textContent = "Inputs shouldn't be empty. Score must be a number";
     msg.classList.add('empty');
     setTimeout(hide, 2000);
   }
@@ -64,7 +67,10 @@ const refreshfun = async (gameid, scoresdiv) => {
     },
   });
   response = await response.json();
-  response.result.forEach((element) => {
+  console.log(response.result)
+  response = response.result.sort((a,b)=>{return b.score-a.score})
+  console.log(response)
+  response.forEach((element) => {
     scoresdiv.innerHTML += `<li class="scores-li">${element.user}  ${element.score}</li>`;
   });
 };
