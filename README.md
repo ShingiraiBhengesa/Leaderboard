@@ -28,9 +28,10 @@ To get a local copy up and running follow these simple example steps.
 
 ### Setup
 
-- First clone the repository
+- First clone the repository using `git clone https://github.com/ShingiraiBhengesa/Leaderboard.git`
 - In your code editor terminal run `npm install` to install all the dependencies needed.
 - In your code editor terminal run `npm run start` to start the local server.
+- In your code editor terminal, run `npm install --save-dev webpack`  to install the local server
 
 
 ## Author 👤
