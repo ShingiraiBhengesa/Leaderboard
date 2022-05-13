@@ -32,7 +32,7 @@ const gamename = async (gameid) => {
 };
 
 const submitfun = async (player, score, gameid) => {
-  if (player.value !== '' && score.value !== '' && isNaN(score.value)===false) {
+  if (player.value !== '' && score.value !== '') {
     await fetch(`https://us-central1-js-capstone-backend.cloudfunctions.net/api/games/${gameid}/scores`, {
       method: 'POST',
       body: JSON.stringify({
@@ -49,7 +49,7 @@ const submitfun = async (player, score, gameid) => {
     score.value = '';
     setTimeout(hide, 2000);
   } else {
-    msg.textContent = "Inputs shouldn't be empty. Score must be a number";
+    msg.textContent = "Inputs shouldn't be empty";
     msg.classList.add('empty');
     setTimeout(hide, 2000);
   }
@@ -67,10 +67,7 @@ const refreshfun = async (gameid, scoresdiv) => {
     },
   });
   response = await response.json();
-  console.log(response.result)
-  response = response.result.sort((a,b)=>{return b.score-a.score})
-  console.log(response)
-  response.forEach((element) => {
+  response.result.forEach((element) => {
     scoresdiv.innerHTML += `<li class="scores-li">${element.user}  ${element.score}</li>`;
   });
 };
